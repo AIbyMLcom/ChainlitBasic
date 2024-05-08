@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-type ThemeVariant = 'dark' | 'light' | 'system';
+type ThemeVariant = 'dark' | 'light';
 
 const defaultTheme = 'light';
 
@@ -8,11 +8,10 @@ const preferredTheme = localStorage.getItem(
   'themeVariant'
 ) as ThemeVariant | null;
 
-let theme: ThemeVariant = preferredTheme ? preferredTheme : defaultTheme;
+const serverDefaultTheme = localStorage.getItem('serverDefaultTheme') as ThemeVariant | null;
 
-if (theme === 'system') {
-  theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
+// Use the server default theme if it exists, otherwise use the user's preferred theme or the default theme
+const theme = serverDefaultTheme ? serverDefaultTheme : (preferredTheme ? preferredTheme : defaultTheme);
 
 export const defaultSettingsState = {
   open: false,
@@ -21,7 +20,7 @@ export const defaultSettingsState = {
   hideCot: false,
   isChatHistoryOpen: true,
   language: 'en-US',
-  theme: theme
+  theme
 };
 
 export const settingsState = atom<{

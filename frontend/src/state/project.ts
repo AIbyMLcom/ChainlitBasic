@@ -19,7 +19,7 @@ export interface IProjectSettings {
     default_collapse_content?: boolean;
     default_expand_messages?: boolean;
     github?: string;
-    theme: ThemeVariant;
+    theme: any;
   };
   features: {
     spontaneous_file_upload?: {
