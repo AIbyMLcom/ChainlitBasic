@@ -132,6 +132,11 @@ hide_cot = false
 # Be careful: If this is a relative path, it should not start with a slash.
 # custom_build = "./public/build"
 
+# Specify the default theme
+# Options are "dark", "light", "system"
+# "system" will use the system theme (light or dark) based on the user's system settings.
+# default_theme = "dark"
+
 # Override default MUI light theme. (Check theme.ts)
 [UI.theme]
     #font_family = "Inter, sans-serif"
@@ -195,8 +200,7 @@ class Theme(DataClassJsonMixin):
     font_family: Optional[str] = None
     light: Optional[Palette] = None
     dark: Optional[Palette] = None
-    default_theme: Optional[Literal["light", "dark", "system"]] = "system"
-
+    
 
 @dataclass
 class SpontaneousFileUploadFeature(DataClassJsonMixin):
@@ -243,7 +247,8 @@ class UISettings(DataClassJsonMixin):
     custom_js: Optional[str] = None
     custom_font: Optional[str] = None
     custom_build: Optional[str] = None
-
+    default_theme: Optional[Literal["light", "dark", "system"]] = "system"
+    
 
 @dataclass()
 class CodeSettings:
