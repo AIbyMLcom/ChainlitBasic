@@ -4,7 +4,7 @@ import site
 import sys
 from importlib import util
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Union, Literal
 
 import tomli
 from chainlit.logger import logger
@@ -132,6 +132,11 @@ hide_cot = false
 # Be careful: If this is a relative path, it should not start with a slash.
 # custom_build = "./public/build"
 
+# Specify the default theme
+# Options are "dark", "light", "system"
+# "system" will use the system theme (light or dark) based on the user's system settings.
+# default_theme = "dark"
+
 # Override default MUI light theme. (Check theme.ts)
 [UI.theme]
     #font_family = "Inter, sans-serif"
@@ -190,13 +195,12 @@ class Palette(DataClassJsonMixin):
     background: Optional[str] = ""
     paper: Optional[str] = ""
 
-
 @dataclass()
 class Theme(DataClassJsonMixin):
     font_family: Optional[str] = None
     light: Optional[Palette] = None
     dark: Optional[Palette] = None
-
+    
 
 @dataclass
 class SpontaneousFileUploadFeature(DataClassJsonMixin):
@@ -243,7 +247,8 @@ class UISettings(DataClassJsonMixin):
     custom_js: Optional[str] = None
     custom_font: Optional[str] = None
     custom_build: Optional[str] = None
-
+    default_theme: Optional[Literal["light", "dark", "system"]] = "system"
+    
 
 @dataclass()
 class CodeSettings:

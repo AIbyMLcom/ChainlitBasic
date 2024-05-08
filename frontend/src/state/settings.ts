@@ -8,7 +8,10 @@ const preferredTheme = localStorage.getItem(
   'themeVariant'
 ) as ThemeVariant | null;
 
-const theme = preferredTheme ? preferredTheme : defaultTheme;
+const serverDefaultTheme = localStorage.getItem('serverDefaultTheme') as ThemeVariant | null;
+
+// Use the server default theme if it exists, otherwise use the user's preferred theme or the default theme
+const theme = serverDefaultTheme ? serverDefaultTheme : (preferredTheme ? preferredTheme : defaultTheme);
 
 export const defaultSettingsState = {
   open: false,
@@ -28,6 +31,7 @@ export const settingsState = atom<{
   theme: ThemeVariant;
   isChatHistoryOpen: boolean;
   language: string;
+  defaultTheme?: string;
 }>({
   key: 'AppSettings',
   default: defaultSettingsState

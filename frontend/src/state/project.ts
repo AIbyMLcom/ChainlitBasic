@@ -20,6 +20,7 @@ export interface IProjectSettings {
     default_expand_messages?: boolean;
     github?: string;
     theme: any;
+    default_theme?: string;
   };
   features: {
     spontaneous_file_upload?: {
