@@ -31,6 +31,7 @@ export const settingsState = atom<{
   theme: ThemeVariant;
   isChatHistoryOpen: boolean;
   language: string;
+  defaultTheme?: string;
 }>({
   key: 'AppSettings',
   default: defaultSettingsState
