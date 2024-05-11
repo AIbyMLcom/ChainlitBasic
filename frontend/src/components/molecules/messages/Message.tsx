@@ -10,9 +10,15 @@ import { AUTHOR_BOX_WIDTH, Author } from './components/Author';
 import { DetailsButton } from './components/DetailsButton';
 import { MessageActions } from './components/MessageActions';
 import { MessageButtons } from './components/MessageButtons';
+import { MessageCheckboxGroup } from './components/MessageCheckboxGroup';
 import { MessageContent } from './components/MessageContent';
 
-import type { IAction, IMessageElement, IStep } from 'client-types/';
+import type {
+  IAction,
+  ICheckboxGroup,
+  IMessageElement,
+  IStep
+} from 'client-types/';
 
 import { Messages } from './Messages';
 
@@ -20,6 +26,7 @@ interface Props {
   message: IStep;
   elements: IMessageElement[];
   actions: IAction[];
+  checkboxGroup?: ICheckboxGroup;
   indent: number;
   showAvatar?: boolean;
   showBorder?: boolean;
@@ -32,6 +39,7 @@ const Message = memo(
     message,
     elements,
     actions,
+    checkboxGroup,
     indent,
     showAvatar,
     showBorder,
@@ -114,6 +122,12 @@ const Message = memo(
                 {actions?.length ? (
                   <MessageActions message={message} actions={actions} />
                 ) : null}
+                {checkboxGroup ? (
+                  <MessageCheckboxGroup
+                    message={message}
+                    checkboxGroup={checkboxGroup}
+                  />
+                ) : null}
                 <MessageButtons message={message} />
               </Stack>
             </Author>
@@ -123,6 +137,7 @@ const Message = memo(
           <Messages
             messages={message.steps}
             actions={actions}
+            checkboxGroup={checkboxGroup}
             elements={elements}
             indent={indent + 1}
             isRunning={isRunning}

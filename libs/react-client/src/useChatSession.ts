@@ -15,6 +15,7 @@ import {
   chatProfileState,
   chatSettingsInputsState,
   chatSettingsValueState,
+  checkboxGroupState,
   currentThreadIdState,
   elementState,
   firstUserInteraction,
@@ -29,6 +30,7 @@ import {
 import {
   IAction,
   IAvatarElement,
+  ICheckboxGroup,
   IElement,
   IMessageElement,
   IStep,
@@ -61,6 +63,7 @@ const useChatSession = () => {
   const setAvatars = useSetRecoilState(avatarState);
   const setTasklists = useSetRecoilState(tasklistState);
   const setActions = useSetRecoilState(actionState);
+  const setCheckboxGroup = useSetRecoilState(checkboxGroupState);
   const setChatSettingsInputs = useSetRecoilState(chatSettingsInputsState);
   const setTokenCount = useSetRecoilState(tokenCountState);
   const [chatProfile, setChatProfile] = useRecoilState(chatProfileState);
@@ -268,6 +271,10 @@ const useChatSession = () => {
         });
       });
 
+      socket.on('checkbox_group', (checkboxGroup: ICheckboxGroup) => {
+        setCheckboxGroup(checkboxGroup);
+      });
+
       socket.on('action', (action: IAction) => {
         setActions((old) => [...old, action]);
       });
@@ -278,6 +285,12 @@ const useChatSession = () => {
           if (index === -1) return old;
           return [...old.slice(0, index), ...old.slice(index + 1)];
         });
+      });
+
+      socket.on('remove_checkbox_group', (checkboxGroup: ICheckboxGroup) => {
+        checkboxGroup.options = [];
+        checkboxGroup.selected = [];
+        setCheckboxGroup(checkboxGroup);
       });
 
       socket.on('token_usage', (count: number) => {

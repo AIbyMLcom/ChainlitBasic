@@ -24,6 +24,7 @@ import chainlit.input_widget as input_widget
 from chainlit.action import Action
 from chainlit.cache import cache
 from chainlit.chat_settings import ChatSettings
+from chainlit.checkbox_group import CheckboxGroup, CheckboxGroupOption
 from chainlit.config import config
 from chainlit.context import context
 from chainlit.element import (
@@ -43,6 +44,7 @@ from chainlit.element import (
 from chainlit.logger import logger
 from chainlit.message import (
     AskActionMessage,
+    AskCheckboxMessage,
     AskFileMessage,
     AskUserMessage,
     ErrorMessage,
@@ -352,6 +354,8 @@ __all__ = [
     "CopilotFunction",
     "AudioChunk",
     "Action",
+    "CheckboxGroup",
+    "CheckboxGroupOption",
     "User",
     "PersistedUser",
     "Audio",
@@ -372,6 +376,7 @@ __all__ = [
     "ErrorMessage",
     "AskUserMessage",
     "AskActionMessage",
+    "AskCheckboxMessage",
     "AskFileMessage",
     "Step",
     "step",

@@ -11,6 +11,7 @@ from chainlit.session import BaseSession, WebsocketSession
 from chainlit.step import StepDict
 from chainlit.types import (
     AskActionResponse,
+    AskCheckboxResponse,
     AskSpec,
     FileDict,
     FileReference,
@@ -252,7 +253,12 @@ class ChainlitEmitter(BaseChainlitEmitter):
             await self.task_end()
 
             final_res: Optional[
-                Union["StepDict", "AskActionResponse", List["FileDict"]]
+                Union[
+                    "StepDict",
+                    "AskActionResponse",
+                    "AskCheckboxResponse",
+                    List["FileDict"],
+                ]
             ] = None
 
             if user_res:
@@ -289,6 +295,9 @@ class ChainlitEmitter(BaseChainlitEmitter):
                     action_res = cast(AskActionResponse, user_res)
                     final_res = action_res
                     interaction = action_res["value"]
+                elif spec.type == "checkbox_group":
+                    checkbox_res = cast(AskCheckboxResponse, user_res)
+                    final_res = checkbox_res
 
                 if not self.session.has_first_interaction and interaction:
                     self.session.has_first_interaction = True

@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from chainlit.element import ElementDict
     from chainlit.step import StepDict
 
+from chainlit.checkbox_group import CheckboxGroupOption
 from dataclasses_json import DataClassJsonMixin
 from literalai import ChatGeneration, CompletionGeneration
 from pydantic import BaseModel
@@ -124,7 +125,7 @@ class AskSpec(DataClassJsonMixin):
     """Specification for asking the user."""
 
     timeout: int
-    type: Literal["text", "file", "action"]
+    type: Literal["text", "file", "action", "checkbox_group"]
 
 
 @dataclass
@@ -135,6 +136,16 @@ class AskFileSpec(FileSpec, AskSpec, DataClassJsonMixin):
 @dataclass
 class AskActionSpec(ActionSpec, AskSpec, DataClassJsonMixin):
     """Specification for asking the user an action"""
+
+
+@dataclass
+class CheckboxSpec(DataClassJsonMixin):
+    options: List[CheckboxGroupOption]
+
+
+@dataclass
+class AskCheckboxSpec(CheckboxSpec, AskSpec, DataClassJsonMixin):
+    """Specification for asking the user a checkbox group."""
 
 
 class FileReference(TypedDict):
@@ -180,6 +191,10 @@ class AskFileResponse:
     path: str
     size: int
     type: str
+
+
+class AskCheckboxResponse(TypedDict):
+    selected: List[dict]
 
 
 class AskActionResponse(TypedDict):
